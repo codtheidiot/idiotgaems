@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>YouTube Link to Embed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; }
+    input[type="url"] { width: 60%; padding: 0.5rem; }
+    button { padding: 0.5rem 1rem; margin-left: 0.5rem; }
+    .embed-wrap { position: relative; width: 100%; max-width: 640px; aspect-ratio: 16/9; margin-top: 1rem; }
+    iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    textarea { width: 100%; height: 80px; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>youtube unblocker</h1>
+  <p>put a yt link and it will load it at the bottom</p>
+
+  <input id="yt" type="url" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ" />
+  <button id="make">Make embed</button>
+
+  <div id="preview" class="embed-wrap" hidden>
+    <iframe id="player" allowfullscreen></iframe>
+  </div>
+
+  <textarea id="code" readonly hidden></textarea>
+
+  <script>
+    const input = document.getElementById('yt');
+    const btn = document.getElementById('make');
+    const preview = document.getElementById('preview');
+    const iframe = document.getElementById('player');
+    const code = document.getElementById('code');
+
+    function getYouTubeId(url) {
+      try {
+        const u = new URL(url.trim());
+        if (u.hostname.includes('youtu.be')) {
+          return u.pathname.slice(1);
+        }
+        return u.searchParams.get('v');
+      } catch {
+        return null;
+      }
+    }
+
+    function makeEmbed() {
+      let raw = input.value.trim();
+      if (!raw) {
+        raw = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // not sus at all
+      }
+      const id = getYouTubeId(raw);
+      if (!id) {
+        alert("Invalid YouTube URL");
+        return;
+      }
+      const src = `https://www.youtube.com/embed/${id}`;
+      iframe.src = src;
+      preview.hidden = false;
+      code.hidden = false;
+      code.value = `<iframe src="${src}" width="560" height="315" frameborder="0" allowfullscreen></iframe>`;
+    }
+
+    btn.addEventListener('click', makeEmbed);
+  </script>
+</body>
+</html>
