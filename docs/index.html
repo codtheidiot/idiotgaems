@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script>
+    window.onload = function() {
+      var password = prompt("Enter the password to continue:");
+      var saved = "doofus123";
+
+      if (password === saved) {
+        document.getElementById("content").style.display = "block";
+      } else {
+        alert("Wrong password! Access denied.");
+        window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+      }
+    }
+  </script>
   <link rel="icon" type="image/png" href="favicon.png">
   <title>idiot gaems</title>
   <style>
